@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import list from './assets/list'
 import { nanoid } from 'nanoid' 
+import Input from './Input';
 
 function App() {
   const[listOfProduct,setListOfProduct]= useState(list);
@@ -13,17 +14,22 @@ function App() {
   }
 
   function addItem(productName){
-    const newProduct = {
-      id : nanoid(),
-      name : productName,
-    };
-    setListOfProduct([...listOfProduct,newProduct]);
+    if(productName !== ''){
+      const newProduct = {
+        id : nanoid(),
+        name : productName,
+      };
+      const list = listOfProduct;
+      list.push(newProduct);
+      setListOfProduct(list);
+    }
   }
   
 
   return (
     <div>
-      <h1>Lala</h1>
+      <h1>Grocery Bud</h1>
+      <Input addItem={addItem} />
     </div>
   )
 }
