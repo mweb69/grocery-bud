@@ -1,28 +1,55 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect , useState } from 'react';
 import './MyAlert.css'
+import ProgressBar from 'react-bootstrap/ProgressBar';
 
 function MyAlert(props) {
+    const [progress, setProgress] = useState(0);
+    const [processProgress,setProcessProgress] = useState(true);
 
     const {variant,message,setItem} = props;
 
     useEffect(() => {
         setTimeout(() => {
             setItem(false);
-        }, 60000);
+        }, 6000);
     }, []);
 
+    const changeProgress = () => {
+        if(progress < 100){
+            setProgress((pro)=> pro + 0.1)
+        }
+        console.log(progress)
+    }
+
+    const processProgressTest = () =>{
+        setTimeout(()=>{
+            if(processProgress){
+                processProgressTest()
+            }
+            else{
+                changeProgress()
+            }
+        },1000)
+    }
+
+    useEffect(()=>{
+        if(processProgress){
+            setTimeout(()=>{
+                changeProgress()
+            }, 3)
+        }
+        else{
+            processProgressTest()
+        }
+    },[progress])
+
     return (
-        <div className={`alert alert-${variant}`} role="alert">
+        <div className={`alert alert-${variant}`} 
+            role="alert" 
+            onClick={()=>setProcessProgress(!processProgress)}>
             {message}
-            <div
-                className="progress-bar progress-bar-striped progress-bar-animated"
-                role="progressbar"
-                aria-valuenow="0"
-                aria-valuemin="0"
-                aria-valuemax="100"
-                style={{ width: '100%',height: '30px' }}
-            ></div>
+            <ProgressBar now={progress} />
         </div>
     );
 }
