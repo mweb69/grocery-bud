@@ -8,6 +8,8 @@ import MyAlert from './MyAlert';
 
 function App() {
   const[listOfProduct,setListOfProduct]= useState(list);
+  const[itemAdded,setItemAdded] = useState(false);
+  const[itemRemoved,setItemRemoved] = useState(false);
 
   useEffect(()=>{
     localStorage.setItem('myArray', JSON.stringify(listOfProduct));
@@ -20,6 +22,7 @@ function App() {
       setListOfProduct((prevList)=>
         prevList.filter((prod)=>prod.id !== product.id)
       )
+      setItemRemoved(true)
     }
   }
 
@@ -30,13 +33,19 @@ function App() {
         name : productName,
       };
       setListOfProduct((list) => [...list,newProduct]);
+      setItemAdded(true)
     }
   }
   
 
   return (
     <div>
-      <MyAlert variant="success" message="This is a success alert." />
+      {itemAdded && 
+        <MyAlert variant="success" message="Item Added To The List" setItem={setItemAdded} />
+      }
+      {itemRemoved &&
+        <MyAlert variant="danger" message="Item Removed" setItem={setItemRemoved} />
+      }
       <h1>Grocery Bud</h1>
       <Input addItem={addItem} />
       <ListProduct removeItem={removeItem} listOfProduct={listOfProduct} />

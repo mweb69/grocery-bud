@@ -1,0 +1,12 @@
+/* Override the existing classes with new colors */
+.progress-bar {
+    background-color: blue; /* Change this to your desired color */
+}
+
+.progress-bar-striped {
+    background-color: green; /* Change this to your desired color */
+}
+
+.progress-bar-animated {
+    background-color: yellow; /* Change this to your desired color */
+}
