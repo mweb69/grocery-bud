@@ -18,7 +18,7 @@ function App() {
   
 
   function removeItem(isChecked,product){
-    if(isChecked){
+    if(isChecked && !itemAdded){
       setListOfProduct((prevList)=>
         prevList.filter((prod)=>prod.id !== product.id)
       )
@@ -27,7 +27,7 @@ function App() {
   }
 
   function addItem(productName){
-    if(productName !== ''){
+    if((productName !== '')&&(!itemRemoved)){
       const newProduct = {
         id : nanoid(),
         name : productName,
